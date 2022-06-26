@@ -1,3 +1,7 @@
+/// A module for sanitizing strings and avoid them from breaking the format 
+/// of the `LnPkg` that they are in
+pub mod sanitizer;
+
 use std::collections::HashMap;
 pub type ClientId = i128;
 
