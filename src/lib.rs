@@ -73,7 +73,14 @@ impl LnPkg {
                     return true;
                 }
             })
+            .map(|(k,v)| {
+                if let LnPkgValue::String(s) = v {
+                    return (k, LnPkgValue::String(sanitizer::sanitize_string(s)));
+                }
+                (k,v)
+            })
             .collect();
+        // TODO: Continue here
         Self {
             content: target,
             pkg_type,
@@ -189,7 +196,7 @@ impl std::fmt::Display for LnPkgValue {
             match self {
                 Self::Bool(b) => format!("{}", b),
                 Self::Int(i) => format!("{}", i),
-                Self::String(s) => s.clone(),
+                Self::String(s) => sanitizer::sanitize_string(s.clone()),
                 Self::List(l) => "[".to_string() + &l.join(";") + &"]".to_string(),
                 _ => "".to_string(),
             }
@@ -199,7 +206,7 @@ impl std::fmt::Display for LnPkgValue {
 
 impl LnPkgValue {
     pub fn from_string(target: String) -> LnPkgValue {
-        let result;
+        let result: LnPkgValue;
         if let Ok(int) = target.parse::<ClientId>() {
             result = LnPkgValue::Int(int)
         } else if let Ok(boolean) = target.parse::<bool>() {
@@ -210,7 +217,7 @@ impl LnPkgValue {
             result = list;
         } else {
             // String
-            result = LnPkgValue::String(target);
+            result = LnPkgValue::String(sanitizer::sanitize_string(target));
         }
         result
     }
