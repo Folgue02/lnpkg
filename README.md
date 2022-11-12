@@ -17,3 +17,6 @@ The currently supported
 - `Int` (*i128*)
 - `List` (*Vec&lt;String&gt;*)
 - `Null` (*The key doesn't point to any value*)
+
+## Standalone branch
+LakeNetPackage was initially created for another project, due to those circumstances, lnpkg had some project-specific code which would not let this package be used outside of the mentioned project. The standalone branch fixes that by removing that code.
