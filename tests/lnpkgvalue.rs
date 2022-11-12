@@ -23,7 +23,7 @@ fn empty() {
 
 #[test]
 fn parse_basic_list() {
-    let sample = "type=msg:names=[jhonny;mark]:".to_string();
+    let sample = "names=[jhonny;mark]:".to_string();
     let mut hm = HashMap::new();
     hm.insert(
         "names".to_string(),
@@ -31,17 +31,17 @@ fn parse_basic_list() {
     );
     assert_eq!(
         LnPkg::from_string(&sample),
-        LnPkg::from_hashmap(hm, LnPkgType::Message)
+        LnPkg::from_hashmap(hm)
     )
 }
 #[test]
 fn parse_emtpy_list() {
-    let sample = "type=msg:names=[]";
+    let sample = "names=[]";
     let mut hm = HashMap::new();
     hm.insert("names".to_string(), LnPkgValue::List(Vec::new()));
 
     assert_eq!(
         LnPkg::from_string(sample),
-        LnPkg::from_hashmap(hm, LnPkgType::Message)
+        LnPkg::from_hashmap(hm)
     );
 }
