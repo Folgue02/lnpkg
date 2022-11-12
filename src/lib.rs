@@ -79,7 +79,7 @@ impl LnPkg {
     /// Checks for the existance of `keys` inside of the LakeNetPackage, if all of them exist
     /// this function will return `true`, if at least one of them doesn't exist in the `self.content`
     /// hashmap, it will return `false`
-    pub fn exist(&self, keys: &[&str]) -> bool {
+    pub fn contains_list(&self, keys: &[&str]) -> bool {
         for k in keys {
             if !self.content.contains_key(*k) {
                 return false;
@@ -88,6 +88,16 @@ impl LnPkg {
             }
         }
         true
+    }
+
+    /// Returns `true` if `key` exists inside of the LnPkg, if not, this method will
+    /// return `false`
+    pub fn contains(&self, key: &str) -> bool {
+        if self.content.contains_key(key) {
+            true
+        } else {
+            false
+        }
     }
 }
 
